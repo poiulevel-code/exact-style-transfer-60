@@ -16,7 +16,7 @@ export function PdfButton({ make, depsKey, auto = false, label, readyLabel, clas
   readyLabel?: string;
   className: string;
 }) {
-  const [state, setState] = useState<{ s: "idle" | "busy" | "ready" | "error"; file?: Made }>({ s: "idle" });
+  const [state, setState] = useState<{ s: "idle" | "busy" | "ready" | "error"; file?: Made | undefined }>({ s: "idle" });
   const makeRef = useRef(make);
   makeRef.current = make;
   const run = useRef(0);
