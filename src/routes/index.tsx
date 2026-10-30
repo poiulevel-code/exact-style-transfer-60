@@ -1,9 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, User, GraduationCap, Users, UserPlus } from "@/components/app/icons";
-import { Sheet } from "@/components/app/Sheet";
-import { StudentForm, emptyStudent } from "@/components/app/StudentForm";
-import { PhotoNamesImport } from "@/components/app/PhotoNamesImport";
+import { Search, User, GraduationCap, Users } from "@/components/app/icons";
 import { Avatar } from "@/components/app/AppShell";
 import { useStore } from "@/lib/store";
 
@@ -20,9 +17,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { students, addStudent } = useStore();
+  const { students } = useStore();
   const [q, setQ] = useState("");
-  const [addOpen, setAddOpen] = useState(false);
   const list = students.filter((s) => s.name.toLocaleLowerCase("tr").includes(q.toLocaleLowerCase("tr")));
   return (
     <>
@@ -32,13 +28,6 @@ function Index() {
           <User className="h-4 w-4" /> {students.length}
         </span>
       </div>
-      <button onClick={() => setAddOpen(true)} className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-sm font-medium text-primary-foreground">
-        <UserPlus className="h-5 w-5" /> Talebe Ekle
-      </button>
-      <Sheet open={addOpen} onClose={() => setAddOpen(false)} title="Yeni Talebe">
-        <PhotoNamesImport onDone={() => setAddOpen(false)} />
-        <StudentForm initial={emptyStudent} onSubmit={(s) => { addStudent(s); setAddOpen(false); }} />
-      </Sheet>
       <div className="mt-4 flex items-center gap-2 rounded-2xl bg-surface px-4 py-3">
         <Search className="h-4 w-4 text-muted-foreground" />
         <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Talebe ara..." className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
@@ -47,7 +36,7 @@ function Index() {
         <div className="mt-6 rounded-2xl border border-dashed border-border bg-card p-8 text-center">
           <Users className="mx-auto h-10 w-10 text-muted-foreground" />
           <p className="mt-3 font-serif text-lg font-bold">Henüz talebe yok</p>
-          <p className="mt-1 text-sm text-muted-foreground">Yukarıdaki "Talebe Ekle" düğmesiyle başlayın.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Talebe eklemek için Menü'deki "Talebe Ekle" düğmesini kullanın.</p>
         </div>
       ) : (
         <>
