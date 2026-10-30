@@ -5,6 +5,7 @@ import { getFile } from "@/lib/attachments";
 function useFileUrl(id?: string | undefined) {
   const [file, setFile] = useState<{ url: string; type: string; name: string } | null>(null);
   useEffect(() => {
+    setFile(null);
     if (!id) return;
     let url = "";
     let alive = true;
@@ -22,11 +23,11 @@ function One({ id, label, icon: Icon }: { id?: string | undefined; label: string
   const f = useFileUrl(id);
   if (!id || !f) return null;
   return (
-    <a href={f.url} target="_blank" rel="noreferrer" className="block min-w-0 overflow-hidden rounded-xl border border-border bg-surface">
+    <a href={f.url} target="_blank" rel="noreferrer" className="block min-w-0">
       {f.type.startsWith("image/")
-        ? <img src={f.url} alt={label} className="h-24 w-full object-cover" loading="lazy" />
-        : <div className="flex h-24 items-center justify-center"><FileText className="h-8 w-8 text-muted-foreground" /></div>}
-      <p className="flex items-center gap-1 truncate px-2 py-1 text-xs text-muted-foreground"><Icon className="h-3.5 w-3.5 shrink-0" /> {label}</p>
+        ? <img src={f.url} alt={label} className="h-auto w-full object-contain" loading="lazy" />
+        : <div className="flex items-center gap-2 py-3 text-primary"><FileText className="h-6 w-6 shrink-0" /><span className="break-all text-sm">{f.name}</span></div>}
+      <p className="mt-2 flex items-center gap-1 text-xs text-muted-foreground"><Icon className="h-3.5 w-3.5 shrink-0" /> {label}</p>
     </a>
   );
 }
@@ -34,7 +35,7 @@ function One({ id, label, icon: Icon }: { id?: string | undefined; label: string
 export function TutanakFiles({ photoId, docId }: { photoId?: string | undefined; docId?: string | undefined }) {
   if (!photoId && !docId) return null;
   return (
-    <div className="mt-3 grid grid-cols-2 gap-2">
+    <div className="mt-3 space-y-4">
       <One id={photoId} label="Fotoğraf Kanıtı" icon={Camera} />
       <One id={docId} label="İmzalı Belge" icon={FileText} />
     </div>
