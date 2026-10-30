@@ -1,7 +1,7 @@
 import { localIso } from "@/lib/utils";
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Download, Upload, RotateCcw, FileDown, UserPlus } from "@/components/app/icons";
+import { Download, Upload, FileDown, UserPlus } from "@/components/app/icons";
 import { ReportSheet } from "@/components/app/ReportSheet";
 import { Sheet } from "@/components/app/Sheet";
 import { StudentForm, emptyStudent } from "@/components/app/StudentForm";
@@ -13,16 +13,16 @@ export const Route = createFileRoute("/menu")({
   head: () => ({
     meta: [
       { title: "Menü — Kur'an Kursu" },
-      { name: "description", content: "Kur'an kursu verilerini yedekleyin, geri yükleyin veya sıfırlayın." },
+      { name: "description", content: "Kur'an kursu verilerini yedekleyin ve geri yükleyin." },
       { property: "og:title", content: "Menü — Kur'an Kursu" },
-      { property: "og:description", content: "Kur'an kursu verilerini yedekleyin, geri yükleyin veya sıfırlayın." },
+      { property: "og:description", content: "Kur'an kursu verilerini yedekleyin ve geri yükleyin." },
     ],
   }),
   component: Menu,
 });
 
 function Menu() {
-  const { students, tutanaklar, attendance, resetAll, importAll, addStudent } = useStore();
+  const { students, tutanaklar, attendance, importAll, addStudent } = useStore();
   const fileRef = useRef<HTMLInputElement>(null);
   const [msg, setMsg] = useState("");
   const [reportOpen, setReportOpen] = useState(false);
@@ -70,12 +70,6 @@ function Menu() {
         <button onClick={exportData} className={btn}><Download className="h-5 w-5 text-primary" /> Verileri Yedekle (indir)</button>
         <button onClick={() => fileRef.current?.click()} className={btn}><Upload className="h-5 w-5 text-primary" /> Yedeği Geri Yükle</button>
         <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={(e) => importData(e.target.files?.[0])} />
-        <button
-          onClick={() => { if (confirm("Tüm talebeler, yoklamalar ve tutanaklar silinsin mi?")) { resetAll(); setMsg("Tüm veriler sıfırlandı."); } }}
-          className={`${btn} border-destructive/40 text-destructive`}
-        >
-          <RotateCcw className="h-5 w-5" /> Tüm Verileri Sıfırla
-        </button>
         {msg && <p className="text-center text-sm text-primary">{msg}</p>}
         <p className="text-center text-xs text-muted-foreground">Veriler bu cihazda saklanır.</p>
       </div>

@@ -48,7 +48,6 @@ type Store = {
   removeAttendance: (id: string) => void;
   updateTutanak: (id: string, t: Partial<Tutanak>) => void;
   saveDay: (date: string, rows: Omit<AttendanceRow, "id" | "date">[]) => void;
-  resetAll: () => void;
   importAll: (s: State) => void;
 };
 
@@ -118,7 +117,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           ],
         };
       }),
-    resetAll: () => setState({ students: [], tutanaklar: [], attendance: [] }),
     importAll: (s) => setState({ students: s.students ?? [], tutanaklar: s.tutanaklar ?? [], attendance: s.attendance ?? [] }),
   };
 
