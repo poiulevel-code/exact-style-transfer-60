@@ -33,7 +33,7 @@ const tabs = ["Yoklama", "Tutanaklar", "Aile Raporu"] as const;
 const vakitIcons = { Sabah: Sunrise, Öğle: Sun, İkindi: CloudSun, Akşam: Sunset, Yatsı: Moon } as Record<string, typeof Clock>;
 function TutCard({ t, student, onSign, onRemove }: { t: Tutanak; student: Student; onSign?: () => void; onRemove?: () => void }) {
   return (
-    <div className={`rounded-2xl border bg-card p-4 ${t.positive ? "border-good/40" : "border-warn/40"}`}>
+    <div className="border-b border-border py-4">
       <div className="flex items-start gap-3">
         <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${t.positive ? "bg-brand-soft" : "bg-amber-soft"}`}>
           {t.positive ? <ThumbsUp className="h-5 w-5 text-good" /> : <AlertTriangle className="h-5 w-5 text-warn" />}
@@ -53,7 +53,7 @@ function TutCard({ t, student, onSign, onRemove }: { t: Tutanak; student: Studen
           )}
         </div>
       </div>
-      {t.body && <p className="mt-3 whitespace-pre-wrap rounded-xl bg-surface p-4 text-sm leading-relaxed">{t.body}</p>}
+      {t.body && <p className="mt-3 whitespace-pre-wrap break-words text-sm leading-relaxed">{t.body}</p>}
       <TutanakFiles photoId={t.photoId} docId={t.docId} />
       <div className="mt-3 flex items-center justify-between gap-2">
         <PdfButton
